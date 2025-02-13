@@ -19,3 +19,38 @@ uvicorn src.api.main:app --reload
 ```
 http://127.0.0.1:8000/docs
 ```
+
+
+
+financeinsight  
+│── app  
+│   ├── src  
+│   │   ├── main.py  
+│   │   ├── webscraping  
+│   │   │   ├── api  
+│   │   │   │   ├── routes.py  
+│   │   │   ├── core  
+│   │   │   │   ├── models.py  
+│   │   │   │   ├── usecase.py  
+│   │   │   ├── infrastructure  
+│   │   │   │   ├── cripto_scraper.py  
+│   │   │   │   ├── storage.py  
+│   │   ├── machine_learning
+│   │   │   ├── models  
+│   │   │   │   ├── model.py  
+│   │   │   │   ├── preprocess.py  
+│   │   │   │   ├── predict.py 
+│   │   │   ├── training  
+│   │   │   │   ├── train.py   
+│   │   │   │   ├── evaluation.py  
+│   │   │   │   ├── hyperparameter_tuning.py  
+│   │   │   ├── dashboards 
+│   │   │   │   ├── dashboard.py  
+│   │   │   │   ├── templates/ 
+│   │   │   ├── tests  
+│   │   │   │   ├── test_ml_model.py  
+│   ├── data_lake  
+│   │   ├── raw/
+│   │   ├── refined/  
+│── README.md  
+│── requirements.txt  

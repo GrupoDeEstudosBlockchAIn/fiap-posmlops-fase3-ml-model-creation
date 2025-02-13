@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 from datetime import datetime
-from src.core.models import CryptoData
+from webscraping.core.models import CryptoData
 
-DATA_DIR = "data"
+DATA_DIR = "app/data_lake/raw/"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 def save_crypto_data(crypto_data: CryptoData):

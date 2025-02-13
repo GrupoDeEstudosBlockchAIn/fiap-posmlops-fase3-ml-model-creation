@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from src.api.routes import router
+from webscraping.api.routes import router
 
 app = FastAPI(
     title="CoinGecko API",
