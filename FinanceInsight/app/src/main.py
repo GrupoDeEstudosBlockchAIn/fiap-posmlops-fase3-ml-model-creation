@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from webscraping.api.routes import router
+from app.src.webscraping.api.routes import router
 
 app = FastAPI(
     title="CoinGecko API",
@@ -16,3 +16,6 @@ app.include_router(router)
 def root():
     return RedirectResponse(url="/cryptos?limit=100")
 
+@app.get("/health")
+def healthcheck():
+    return {"status": "ok"}

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-from webscraping.core.models import CryptoData
+from app.src.webscraping.core.models import CryptoData
 
 # Encontrar a raiz do projeto (FinanceInsight)
 BASE_DIR = Path(__file__).resolve().parents[4]  # Subindo quatro níveis agora

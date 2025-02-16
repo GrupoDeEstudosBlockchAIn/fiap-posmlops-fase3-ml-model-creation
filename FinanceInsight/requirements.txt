@@ -5,3 +5,6 @@ pyarrow
 pydantic
 requests
 openpyxl
+httpx
+pytest-asyncio
+pytest

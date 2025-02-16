@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from webscraping.core.usecase import get_and_store_top_cryptos
+from app.src.webscraping.core.usecase import get_and_store_top_cryptos
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 import requests
 from fastapi import HTTPException
-from webscraping.core.models import CryptoData
+from app.src.webscraping.core.models import CryptoData
 
 COINGECKO_API = "https://api.coingecko.com/api/v3"
 
