@@ -29,6 +29,18 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
+
+      - name: Check if requirements.txt exists
+        run: |
+          if [ -f requirements.txt ]; then
+            echo "Found requirements.txt in root"
+          elif [ -f financeinsight/requirements.txt ]; then
+            echo "Found requirements.txt in financeinsight/"
+          else
+            echo "requirements.txt NOT FOUND!"
+            exit 1
+          fi
+      
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
@@ -55,6 +67,17 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
+      - name: Check if requirements.txt exists
+        run: |
+          if [ -f requirements.txt ]; then
+            echo "Found requirements.txt in root"
+          elif [ -f financeinsight/requirements.txt ]; then
+            echo "Found requirements.txt in financeinsight/"
+          else
+            echo "requirements.txt NOT FOUND!"
+            exit 1
+          fi
+      
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
