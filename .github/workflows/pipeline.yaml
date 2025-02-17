@@ -48,7 +48,7 @@ jobs:
       
       - name: Run Tests
         run: |
-          pytest tests/
+          pytest FinanceInsight/tests/
 
   build:
     name: Build and Package App
