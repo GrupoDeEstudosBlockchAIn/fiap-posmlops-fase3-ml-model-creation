@@ -88,7 +88,7 @@ jobs:
           tar -czf FinanceInsight.tar.gz FinanceInsight/
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: FinanceInsight-package
           path: FinanceInsight.tar.gz
@@ -103,7 +103,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: FinanceInsight-package
 
