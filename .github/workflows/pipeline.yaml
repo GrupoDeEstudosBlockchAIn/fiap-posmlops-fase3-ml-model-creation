@@ -34,8 +34,8 @@ jobs:
         run: |
           if [ -f requirements.txt ]; then
             echo "Found requirements.txt in root"
-          elif [ -f financeinsight/requirements.txt ]; then
-            echo "Found requirements.txt in financeinsight/"
+          elif [ -f FinanceInsight/requirements.txt ]; then
+            echo "Found requirements.txt in FinanceInsight/"
           else
             echo "requirements.txt NOT FOUND!"
             exit 1
@@ -44,7 +44,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r $GITHUB_WORKSPACE/financeinsight/requirements.txt
+          pip install -r $GITHUB_WORKSPACE/FinanceInsight/requirements.txt
       
       - name: Run Tests
         run: |
@@ -71,8 +71,8 @@ jobs:
         run: |
           if [ -f requirements.txt ]; then
             echo "Found requirements.txt in root"
-          elif [ -f financeinsight/requirements.txt ]; then
-            echo "Found requirements.txt in financeinsight/"
+          elif [ -f FinanceInsight/requirements.txt ]; then
+            echo "Found requirements.txt in FinanceInsight/"
           else
             echo "requirements.txt NOT FOUND!"
             exit 1
@@ -81,17 +81,17 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r $GITHUB_WORKSPACE/financeinsight/requirements.txt
+          pip install -r $GITHUB_WORKSPACE/FinanceInsight/requirements.txt
       
       - name: Package Application
         run: |
-          tar -czf financeinsight.tar.gz financeinsight/
+          tar -czf FinanceInsight.tar.gz FinanceInsight/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: financeinsight-package
-          path: financeinsight.tar.gz
+          name: FinanceInsight-package
+          path: FinanceInsight.tar.gz
 
   deploy:
     name: Deploy to Develop, Staging, or Production
@@ -105,7 +105,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: financeinsight-package
+          name: FinanceInsight-package
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
