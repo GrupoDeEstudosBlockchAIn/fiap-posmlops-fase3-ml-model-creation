@@ -14,7 +14,7 @@ on:
 
 jobs:
   install:
-    name: Instalacao das Dependencias
+    name: Install Dependencies
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
-      - name: Install Dependencies
+      - name: Install Python Dependencies
         run: |
           if [ -f requirements.txt ]; then
             echo "Found requirements.txt in root"
@@ -38,10 +38,6 @@ jobs:
             echo "requirements.txt NOT FOUND!"
             exit 1
           fi
-      
-      # - name: Run Tests
-      #   run: |
-      #     pytest FinanceInsight/tests/
 
   build:
     name: Build and Package App
