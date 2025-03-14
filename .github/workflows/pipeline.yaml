@@ -71,8 +71,6 @@ jobs:
         run: |
           if [ -f requirements.txt ]; then
             echo "Found requirements.txt in root"
-          elif [ -f requirements.txt ]; then
-            echo "Found requirements.txt in FinanceInsight/"
           else
             echo "requirements.txt NOT FOUND!"
             exit 1
