@@ -29,6 +29,14 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install Python Dependencies
         run: |
           if [ -f requirements.txt ]; then
@@ -56,16 +64,12 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
-      - name: Install Dependencies
+      - name: Run Code Quality Checks
         run: |
-          if [ -f requirements.txt ]; then
-            echo "Found requirements.txt in root"
-            pip install -r requirements.txt
-          else
-            echo "requirements.txt NOT FOUND!"
-            exit 1
-          fi
-      
+          pip install flake8 black
+          flake8 . --count --show-source --statistics
+          black --check .
+
       - name: Package Application
         run: |
           tar -czf FinanceInsight.tar.gz FinanceInsight/
@@ -94,16 +98,31 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOPMENT environment..."
-          # Adicione os comandos para rodar um ambiente de desenvolvimento
+          mkdir -p /var/www/develop
+          tar -xzf FinanceInsight.tar.gz -C /var/www/develop
+          systemctl restart financeinsight-develop.service
+          echo "Deployment to DEVELOPMENT completed" | tee deploy.log
 
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/staging'
         run: |
           echo "Deploying to STAGING environment..."
-          # Adicione os comandos para staging
+          mkdir -p /var/www/staging
+          tar -xzf FinanceInsight.tar.gz -C /var/www/staging
+          systemctl restart financeinsight-staging.service
+          echo "Deployment to STAGING completed" | tee deploy.log
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/master'
         run: |
           echo "Deploying to PRODUCTION environment..."
-          # Adicione os comandos para produção
+          mkdir -p /var/www/production
+          tar -xzf FinanceInsight.tar.gz -C /var/www/production
+          systemctl restart financeinsight-production.service
+          echo "Deployment to PRODUCTION completed" | tee deploy.log
+
+      - name: Send Notification on Failure
+        if: failure()
+        run: |
+          echo "Deployment failed! Sending alert..."
+          # Aqui você pode adicionar um webhook para Slack, Teams ou Discord
