@@ -1,1 +1,0 @@
-# Função para realizar previsões 

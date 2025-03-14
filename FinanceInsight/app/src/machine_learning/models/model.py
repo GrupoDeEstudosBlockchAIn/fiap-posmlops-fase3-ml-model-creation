@@ -1,1 +1,0 @@
-# Implementação do modelo de machine learning 
