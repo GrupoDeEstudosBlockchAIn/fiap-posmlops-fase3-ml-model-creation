@@ -19,3 +19,4 @@ def root():
 @app.get("/health")
 def healthcheck():
     return {"status": "ok"}
+    
