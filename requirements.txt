@@ -10,7 +10,6 @@ httpx
 pytest-asyncio
 pytest
 scikit-learn
-xgboost
-yahooquery
 yfinance
 plotly
+matplotlib
