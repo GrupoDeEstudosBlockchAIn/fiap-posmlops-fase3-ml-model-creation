@@ -92,27 +92,25 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOPMENT environment..."
-          mkdir -p /var/www/develop
-          tar -xzf FinanceInsight.tar.gz -C /var/www/develop
-          systemctl restart financeinsight-develop.service
+          echo "Deploying to DEVELOPMENT environment..."
+          mkdir -p $HOME/deploy/develop
+          tar -xzf FinanceInsight.tar.gz -C $HOME/deploy/develop
           echo "Deployment to DEVELOPMENT completed" | tee deploy.log
 
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/staging'
         run: |
           echo "Deploying to STAGING environment..."
-          mkdir -p /var/www/staging
-          tar -xzf FinanceInsight.tar.gz -C /var/www/staging
-          systemctl restart financeinsight-staging.service
+          mkdir -p $HOME/deploy/staging
+          tar -xzf FinanceInsight.tar.gz -C $HOME/deploy/staging
           echo "Deployment to STAGING completed" | tee deploy.log
 
       - name: Deploy to Master
         if: github.ref == 'refs/heads/master'
         run: |
           echo "Deploying to MASTER environment..."
-          mkdir -p /var/www/master
-          tar -xzf FinanceInsight.tar.gz -C /var/www/master
-          systemctl restart financeinsight-master.service
+          mkdir -p $HOME/deploy/master
+          tar -xzf FinanceInsight.tar.gz -C $HOME/deploy/master
           echo "Deployment to MASTER completed" | tee deploy.log
 
       - name: Send Notification on Failure
