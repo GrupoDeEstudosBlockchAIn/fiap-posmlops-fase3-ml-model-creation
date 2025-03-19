@@ -7,8 +7,6 @@ pydantic
 requests
 openpyxl
 httpx
-pytest-asyncio
-pytest
 scikit-learn
 yfinance
 plotly
