@@ -96,7 +96,6 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOPMENT environment..."
-          echo "Deploying to DEVELOPMENT environment..."
           mkdir -p $HOME/deploy/develop
           tar -xzf FinanceInsight.tar.gz -C $HOME/deploy/develop
           echo "Deployment to DEVELOPMENT completed" | tee deploy.log
@@ -121,3 +120,4 @@ jobs:
         if: failure()
         run: |
           echo "Deployment failed! Sending alert..."
+
