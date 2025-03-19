@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pandas
+numpy
+pyarrow
+pydantic
+requests
+openpyxl
+httpx
+scikit-learn
+yfinance
+plotly
+matplotlib
+xgboost
+lightgbm
+tensorflow
