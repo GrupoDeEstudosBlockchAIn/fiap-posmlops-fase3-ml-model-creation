@@ -37,6 +37,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - name: Uninstall Unused Dependencies
+        run: |
+          pip uninstall -y pytest pytest-asyncio || true
+
       - name: Install Python Dependencies
         run: |
           if [ -f requirements.txt ]; then
