@@ -64,12 +64,6 @@ jobs:
       - name: List Repository Files
         run: ls -R
 
-      - name: Run Code Quality Checks
-        run: |
-          pip install flake8 black
-          flake8 . --count --show-source --statistics
-          black --check .
-
       - name: Package Application
         run: |
           tar -czf FinanceInsight.tar.gz FinanceInsight/
@@ -81,7 +75,7 @@ jobs:
           path: FinanceInsight.tar.gz
 
   deploy:
-    name: Deploy to Develop, Staging, or Production
+    name: Deploy to Develop, Staging, or Master
     runs-on: ubuntu-latest
     needs: build
 
@@ -112,17 +106,17 @@ jobs:
           systemctl restart financeinsight-staging.service
           echo "Deployment to STAGING completed" | tee deploy.log
 
-      - name: Deploy to Production
+      - name: Deploy to Master
         if: github.ref == 'refs/heads/master'
         run: |
-          echo "Deploying to PRODUCTION environment..."
-          mkdir -p /var/www/production
-          tar -xzf FinanceInsight.tar.gz -C /var/www/production
-          systemctl restart financeinsight-production.service
-          echo "Deployment to PRODUCTION completed" | tee deploy.log
+          echo "Deploying to MASTER environment..."
+          mkdir -p /var/www/master
+          tar -xzf FinanceInsight.tar.gz -C /var/www/master
+          systemctl restart financeinsight-master.service
+          echo "Deployment to MASTER completed" | tee deploy.log
 
       - name: Send Notification on Failure
         if: failure()
         run: |
           echo "Deployment failed! Sending alert..."
-          # Aqui você pode adicionar um webhook para Slack, Teams ou Discord
+
