@@ -7,8 +7,7 @@ import plotly.graph_objects as go
 import joblib
 from pathlib import Path
 import yfinance as yf
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
 # from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
