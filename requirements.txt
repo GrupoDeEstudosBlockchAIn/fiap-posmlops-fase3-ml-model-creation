@@ -12,5 +12,3 @@ yfinance
 plotly
 matplotlib
 xgboost
-lightgbm
-tensorflow
