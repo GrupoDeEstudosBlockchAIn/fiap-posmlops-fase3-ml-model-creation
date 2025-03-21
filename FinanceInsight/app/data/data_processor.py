@@ -6,13 +6,13 @@ from app.src.config import DATA_LAKE_REFINED
 def process_crypto_data(raw_filename):
     """Processa os dados brutos e salva no diretório REFINED com novas features técnicas."""
     if raw_filename is None:
-        print("⚠️ Nenhum arquivo bruto disponível. Pulando processamento.")
+        print("Nenhum arquivo bruto disponível. Pulando processamento.")
         return
 
     df = pd.read_csv(raw_filename)
 
     if df.empty:
-        print("⚠️ Arquivo CSV está vazio. Encerrando processamento.")
+        print("Arquivo CSV está vazio. Encerrando processamento.")
         return
 
     df.dropna(inplace=True)
@@ -41,4 +41,4 @@ def process_crypto_data(raw_filename):
     refined_filename = DATA_LAKE_REFINED / f"refined_{timestamp}.parquet"
     df.to_parquet(refined_filename, index=False)
 
-    print(f"✅ Dados refinados salvos em: {refined_filename}")
+    print(f"Dados refinados salvos em: {refined_filename}")
