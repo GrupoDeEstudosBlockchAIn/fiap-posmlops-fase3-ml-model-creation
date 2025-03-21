@@ -1,15 +1,13 @@
 import pandas as pd
-import numpy as np
-from app.report.report_generator import predictive_model_performance_metrics_report
-from app.src.config import DATA_LAKE_REFINED, MODEL_DIR
-import joblib
+from app.src.config import DATA_LAKE_REFINED
+from app.model.predict import best_model_predict
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import xgboost as xgb
 
 # Função para remover outliers usando o método IQR
 def remove_outliers(df, columns):
+
     """Remove outliers das colunas especificadas usando o método do Intervalo Interquartil (IQR)."""
     for col in columns:
         Q1 = df[col].quantile(0.25)
@@ -21,10 +19,11 @@ def remove_outliers(df, columns):
     return df
 
 def train_and_predict():
+
     """Treina o modelo e faz previsões para as 10 criptomoedas favoritas."""
     files = list(DATA_LAKE_REFINED.glob("*.parquet"))
     if not files:
-        print("⚠️ Nenhum dado refinado disponível.")
+        print("Nenhum dado refinado disponível.")
         return
     
     df_list = [pd.read_parquet(f) for f in files]
@@ -79,41 +78,15 @@ def train_and_predict():
 
     # Obtendo os melhores hiperparâmetros encontrados
     best_params = random_search.best_params_
-    print("🎯 Melhores Hiperparâmetros Encontrados:", best_params)
+    print("Melhores Hiperparâmetros Encontrados:", best_params)
 
     # Treinar modelo final com os melhores hiperparâmetros
     best_model = xgb.XGBRegressor(**best_params)
     best_model.fit(X_train, y_train)
 
-    # Fazer previsões
-    y_pred = best_model.predict(X_test)
     
-    mae = mean_absolute_error(y_test, y_pred)
-    mse = mean_squared_error(y_test, y_pred)
-    rmse = np.sqrt(mse)
-    smape = (2 * abs(y_test - y_pred) / (abs(y_test) + abs(y_pred))).mean() * 100
-    r2 = r2_score(y_test, y_pred)
-    
-    print(f"📊 MAE: {mae:.4f}, MSE: {mse:.4f}, RMSE: {rmse:.4f}, SMAPE: {smape:.2f}%, R²: {r2:.4f}")
-    
-    df_predictions = df.iloc[-10:].copy()
-    df_predictions["Predicted Price"] = best_model.predict(pd.DataFrame(scaler.transform(df[features].iloc[-10:]), columns=features))
-    
-    # Verificando a importância das features
-    feature_importances = pd.Series(best_model.feature_importances_, index=features).sort_values(ascending=False)
-    print("📌 Importância das Features:")
-    print(feature_importances)
-    
-    # Relatório de métricas
-    predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_predictions[["Symbol", "Predicted Price", "Name"]])
-    
-    # Salvando modelo e scaler
-    model_path = MODEL_DIR / "crypto_price_model.pkl"
-    scaler_path = MODEL_DIR / "scaler.pkl"
-    joblib.dump(best_model, model_path)
-    joblib.dump(scaler, scaler_path)
-    print(f"✅ Modelo salvo em: {model_path}")
-    print(f"✅ Scaler salvo em: {scaler_path}")
-    
-    print("🔮 Top 10 previsões de preços:")
-    print(df_predictions[["Symbol", "Predicted Price"]])
+    #############
+    # Previsões #
+    #############
+    best_model_predict(best_model, scaler, X_test, y_test, df, features)
+
