@@ -32,5 +32,5 @@ def dashboards_cryptocurrency_forecast(df_predictions):
     dash_filename = DASH_DIR / f"dash_{timestamp}.html"
     fig.write_html(dash_filename)
     
-    print(f"✅ Dashboard salvo em: {dash_filename}")
+    print(f"Dashboard salvo em: {dash_filename}")
     return dash_filename
