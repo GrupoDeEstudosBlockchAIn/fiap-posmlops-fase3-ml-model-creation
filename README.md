@@ -1,26 +1,40 @@
 # README.md
 # Yahoo Finance API
 
-Este projeto é uma API para buscar cotações de ações no Yahoo Finance e armazenar os dados nos formatos `.parquet` e `.csv`, seguindo a arquitetura Clean Architecture.
+Este projeto é uma API para buscar as melhores cotações das 100 criptomoedas favoritas no Yahoo Finance e armazenar os dados nos formatos `.csv` e `.parquet`, seguindo a arquitetura Clean Architecture.
 
-## Como executar
+## 1. Criando ambiente virtual
+-> Instalação do ambiente VENV:
+```bash
+python -m venv venv 
+```
 
-1. Instale as dependências:
-```sh
+-> Ativação do ambiente VENV:
+```bash
+venv\Scripts\activate 
+```
+
+
+## 2. Dependências
+-> Instale as dependências:
+```bash
 pip install -r requirements.txt
 ```
 
-2. Execute a API:
-```sh
-uvicorn src.api.main:app --reload
+
+## 3. Executar a API
+-> Setar o Path:
+```bash
+cd financeinsight/app/src
 ```
 
-3. Acesse a documentação interativa no Swagger:
-```
-http://127.0.0.1:8000/docs
-```
+-> Executar a API
+```bash
+python main.py
+``` 
 
 
+## 4. Arquitetura do Projeto
 .github
 |── workflows
 |   |── pipeline.yml
@@ -40,7 +54,6 @@ financeinsight/
 │   ├── model/
 │   │   ├── train.py  # Treinamento do modelo
 │   │   ├── predict.py  # Previsões com o modelo treinado
-│   │   ├── evaluate.py  # Avaliação do modelo
 │   │   ├── __init__.py
 │   │
 │   ├── report/
@@ -66,3 +79,7 @@ financeinsight/
 |── requirements.txt  # Dependências do projeto
 |── .gitignore
 |── README.md  
+
+
+## 5. Documentação completa do Projeto
+-> Doc_Previsao_Preco_Cripto.md
