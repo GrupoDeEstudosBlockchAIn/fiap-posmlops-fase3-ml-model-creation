@@ -164,5 +164,5 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     with open(report_filename, "w", encoding="utf-8") as file:
         file.write(report_content)
     
-    print(f"✅ Relatório salvo em: {report_filename}")
+    print(f"Relatório salvo em: {report_filename}")
 

@@ -1,10 +1,18 @@
-# Lista de criptomoedas (substitua ou expanda conforme necessário)
 import datetime
 import pandas as pd
 import yfinance as yf
+import logging
 from app.src.config import DATA_LAKE_RAW
 
+# Configuração do log
+logging.basicConfig(
+    filename=DATA_LAKE_RAW / "fetch_crypto_data.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    encoding="utf-8"
+)
 
+# Analisa as 100 criptomoedas
 CRYPTO_SYMBOLS = [
     "BTC-USD", "ETH-USD", "BNB-USD", "XRP-USD", "ADA-USD", "SOL-USD", "DOGE-USD", "DOT-USD", "MATIC-USD", "LTC-USD",
     "BCH-USD", "LINK-USD", "XLM-USD", "UNI-USD", "ETC-USD", "FIL-USD", "ATOM-USD", "VET-USD", "HBAR-USD", "ICP-USD",
@@ -19,32 +27,40 @@ CRYPTO_SYMBOLS = [
 ]
 
 def fetch_crypto_data():
-    """Coleta dados brutos do Yahoo Finance (via yfinance) e salva no diretório RAW."""
-    tickers = yf.Tickers(" ".join(CRYPTO_SYMBOLS))
-    data = []
-    
+    """Coleta dados brutos do Yahoo Finance (via yfinance) e salva no diretório DATA_LAKE/RAW."""
+
     calculation_date = datetime.datetime.now().strftime("%Y-%m-%d")
     calculation_hour = datetime.datetime.now().strftime("%H:%M:%S")
-
+    data = []
+    
     for symbol in CRYPTO_SYMBOLS:
-        crypto = tickers.tickers.get(symbol)
-        if crypto:
+        try:
+            crypto = yf.Ticker(symbol)
             info = crypto.info
+            
+            if not info:
+                logging.warning(f"Nenhum dado disponível para {symbol}. Pulando...")
+                continue
+            
             data.append({
                 "Symbol": symbol,
                 "Name": info.get("shortName", symbol),
-                "Price": info.get("regularMarketPrice"),
-                "Change": info.get("regularMarketChange"),
-                "Change %": info.get("regularMarketChangePercent"),
-                "Market Cap": info.get("marketCap"),
-                "Volume": info.get("regularMarketVolume"),
-                "Circulating Supply": info.get("circulatingSupply"),
+                "Price": info.get("regularMarketPrice", None),
+                "Change": info.get("regularMarketChange", None),
+                "Change %": info.get("regularMarketChangePercent", None),
+                "Market Cap": info.get("marketCap", None),
+                "Volume": info.get("regularMarketVolume", None),
+                "Circulating Supply": info.get("circulatingSupply", None),
                 "Calculation Date": calculation_date,
                 "Calculation Hour": calculation_hour
             })
+        
+        except Exception as e:
+            logging.error(f"Erro ao coletar dados de {symbol}: {e}")
+            continue
 
     if not data:
-        print("⚠️ Nenhum dado de mercado coletado. Encerrando processamento.")
+        logging.error("Nenhum dado de mercado coletado. Encerrando processamento.")
         return None
 
     df = pd.DataFrame(data)
@@ -58,7 +74,7 @@ def fetch_crypto_data():
     excel_filename = DATA_LAKE_RAW / f"raw_{timestamp}.xlsx"
     df.to_excel(excel_filename, index=False)
 
-    print(f"✅ Dados brutos salvos em: {raw_filename}")
-    print(f"✅ Dados brutos salvos em: {excel_filename}")
+    logging.info(f"Dados brutos salvos em: {raw_filename}")
+    logging.info(f"Dados brutos salvos em: {excel_filename}")
 
     return raw_filename

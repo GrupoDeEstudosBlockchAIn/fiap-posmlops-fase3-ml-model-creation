@@ -20,7 +20,7 @@ def main():
         # Faz o treinamento do modelo de ML de Previsão
         train_and_predict()
 
-        print("⏳ Aguardando 1 hora para a próxima execução...")
+        print("Aguardando 1 hora para a próxima execução...")
         time.sleep(3600)
 
 if __name__ == "__main__":
