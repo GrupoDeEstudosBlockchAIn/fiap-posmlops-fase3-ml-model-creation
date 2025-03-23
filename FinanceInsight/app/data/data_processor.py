@@ -1,6 +1,11 @@
 import datetime
 import pandas as pd
-from app.data.feature_engineering import calculate_bollinger_bands, calculate_macd, calculate_rsi
+import numpy as np
+from app.data.feature_engineering import (
+    calculate_bollinger_bands,
+    calculate_macd,
+    calculate_rsi
+)
 from app.src.config import DATA_LAKE_REFINED
 
 def process_crypto_data(raw_filename):
@@ -26,6 +31,10 @@ def process_crypto_data(raw_filename):
     df["SMA_3"] = df["Price"].rolling(window=3).mean()
     df["SMA_7"] = df["Price"].rolling(window=7).mean()
     df["SMA_14"] = df["Price"].rolling(window=14).mean()
+    df["SMA_30"] = df["Price"].rolling(window=30).mean()  # Correção: Adicionando SMA_30
+
+    # Adicionando Exponential Moving Average (EMA)
+    df["EMA_7"] = df["Price"].ewm(span=7, adjust=False).mean()  # Nova métrica: EMA_7
 
     # Cálculo do RSI
     df["RSI_14"] = calculate_rsi(df["Price"], period=14)
@@ -36,6 +45,11 @@ def process_crypto_data(raw_filename):
     # Cálculo das Bandas de Bollinger
     df["BB_Mean"], df["BB_Upper"], df["BB_Lower"] = calculate_bollinger_bands(df["Price"], window=20)
     
+    # Cálculo da Volatilidade_7 (desvio padrão dos retornos logarítmicos)
+    df["Log_Returns"] = df["Price"].pct_change().apply(lambda x: np.log(1 + x))  # Retornos logarítmicos
+    df["Volatilidade_7"] = df["Log_Returns"].rolling(window=7).std()  # Desvio padrão em 7 dias
+    df.drop(columns=["Log_Returns"], inplace=True)  # Remover coluna auxiliar
+
     # Salvando os dados refinados
     timestamp = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     refined_filename = DATA_LAKE_REFINED / f"refined_{timestamp}.parquet"
