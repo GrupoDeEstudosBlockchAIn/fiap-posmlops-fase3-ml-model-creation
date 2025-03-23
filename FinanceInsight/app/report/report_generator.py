@@ -10,14 +10,24 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     report_filename = REPORT_DIR / f"report_{timestamp}.html"
     
     # Renomeia colunas e formata valores
-    df_predictions = df_predictions.rename(columns={"Symbol": "Símbolo", "Predicted Price": "Preço Previsto", "Name": "Nome"})
-    df_predictions = df_predictions[["Nome", "Símbolo", "Preço Previsto"]]
+    df_predictions = df_predictions.rename(columns={
+        "Symbol": "Símbolo",
+        "Name": "Nome",
+        "Predicted Price": "Preço Previsto",
+        "Price": "Preço Atual"
+    })
+
+    # Reordenando as colunas para incluir "Preço Atual"
+    df_predictions = df_predictions[["Nome", "Símbolo", "Preço Atual", "Preço Previsto"]]    
+
+    # Formata os valores de preço
+    df_predictions["Preço Atual"] = df_predictions["Preço Atual"].apply(lambda x: f"${x:.2f}")
     df_predictions["Preço Previsto"] = df_predictions["Preço Previsto"].apply(lambda x: f"${x:.2f}")
-    
+        
     # Chama a função do dashboard passando os dados processados
     dash_filename = dashboards_cryptocurrency_forecast(df_predictions)
 
-    # 🔹 Valores médios esperados para comparação + Tooltips
+    # Valores médios esperados para comparação + Tooltips
     expected_values = {
         "MAE": (0.5, "Quanto menor, melhor"),
         "MSE": (0.3, "Quanto menor, melhor"),
@@ -26,7 +36,7 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
         "R²": (0.85, "Quanto mais próximo de 1, melhor")
     }
 
-    # 🔹 Tooltips para as métricas
+    # Tooltips para as métricas
     metric_tooltips = {
         "MAE": "Erro médio absoluto - Mede a média dos erros absolutos das previsões.",
         "MSE": "Erro quadrático médio - Penaliza mais os erros grandes devido à elevação ao quadrado.",
@@ -164,5 +174,4 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     with open(report_filename, "w", encoding="utf-8") as file:
         file.write(report_content)
     
-    print(f"Relatório salvo em: {report_filename}")
 

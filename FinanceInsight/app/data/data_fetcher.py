@@ -70,11 +70,11 @@ def fetch_crypto_data():
     raw_filename = DATA_LAKE_RAW / f"raw_{timestamp}.csv"
     df.to_csv(raw_filename, index=False, encoding="utf-8")
 
-    # Salvando Excel
-    excel_filename = DATA_LAKE_RAW / f"raw_{timestamp}.xlsx"
-    df.to_excel(excel_filename, index=False)
+    # # Salvando Excel
+    # excel_filename = DATA_LAKE_RAW / f"raw_{timestamp}.xlsx"
+    # df.to_excel(excel_filename, index=False)
 
     logging.info(f"Dados brutos salvos em: {raw_filename}")
-    logging.info(f"Dados brutos salvos em: {excel_filename}")
+    # logging.info(f"Dados brutos salvos em: {excel_filename}")
 
     return raw_filename
