@@ -79,7 +79,7 @@ financeinsight/
 
 ### **4. Previsões**
 **Arquivo:** `model/predict.py`  
-🔹 Utiliza o modelo treinado para prever os preços das **Top 10 criptomoedas**.  
+🔹 Utiliza o modelo treinado para prever os preços das **Criptomoedas com Maior Potencial de Valorização**.  
 🔹 Gera relatório de métricas (MAE, RMSE, R², SMAPE).  
 🔹 Salva previsões e feature importances.
 

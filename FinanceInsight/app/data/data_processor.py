@@ -20,7 +20,7 @@ def process_crypto_data(raw_filename):
         print("Arquivo CSV está vazio. Encerrando processamento.")
         return
 
-    df.dropna(inplace=True)
+    # df.dropna(inplace=True)
 
     for col in ["Price", "Change", "Change %", "Market Cap", "Volume", "Circulating Supply"]:
         df[col] = pd.to_numeric(df[col], errors="coerce")

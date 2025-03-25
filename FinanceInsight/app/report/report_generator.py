@@ -1,4 +1,3 @@
-
 import datetime
 from app.dashboard.dashboard_generator import dashboards_cryptocurrency_forecast
 from app.src.config import REPORT_DIR
@@ -21,8 +20,8 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     df_predictions = df_predictions[["Nome", "Símbolo", "Preço Atual", "Preço Previsto"]]    
 
     # Formata os valores de preço
-    df_predictions["Preço Atual"] = df_predictions["Preço Atual"].apply(lambda x: f"${x:.2f}")
-    df_predictions["Preço Previsto"] = df_predictions["Preço Previsto"].apply(lambda x: f"${x:.2f}")
+    df_predictions["Preço Atual"] = df_predictions["Preço Atual"].apply(lambda x: f"${x:.4f}")
+    df_predictions["Preço Previsto"] = df_predictions["Preço Previsto"].apply(lambda x: f"${x:.4f}")
         
     # Chama a função do dashboard passando os dados processados
     dash_filename = dashboards_cryptocurrency_forecast(df_predictions)
@@ -48,13 +47,15 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     report_content = f"""
     <html>
     <head>
-        <title>Relatório de Métricas do Modelo</title>
+        <title>Relatório de Métricas do Modelo Preditivo</title>
         <style>
             body {{ font-family: Arial, sans-serif; margin: 20px; }}
             h1 {{ color: #2c3e50; }}
             table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
             th, td {{ border: 1px solid #ddd; padding: 8px; text-align: center; }}
             th {{ background-color: #2c3e50; color: white; }}
+            th.preco-previsto-header {{ background-color: green; color: white; }}
+            .highlight-red {{ color: red; font-weight: bold; }}
             .tooltip {{
                 position: relative;
                 display: inline-block;
@@ -81,6 +82,10 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
                 visibility: visible;
                 opacity: 1;
             }}
+            /* Definição do tamanho das colunas */
+            .col-metric {{ width: 34%; }}
+            .col-value {{ width: 33%; }}
+            .col-expected {{ width: 33%; }}
         </style>
     </head>
     <body>
@@ -88,81 +93,53 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
         <p><strong>Data da Previsão:</strong> {now.strftime('%d/%m/%Y')}</p>
         <p><strong>Horário da Previsão:</strong> {now.strftime('%H:%M')}</p>
         
-        <h2>Previsões das Top 10 Criptomoedas</h2>
-        {df_predictions.to_html(index=False)}
+        <h2>Criptomoedas com Maior Potencial de Valorização</h2>
+        {df_predictions.to_html(index=False).replace('<th>Preço Previsto</th>', '<th class="preco-previsto-header">Preço Previsto</th>')}
         
         <h2>Métricas de Desempenho</h2>
         <table>
             <tr>
-                <th>Métrica</th>
-                <th>Valor</th>
-                <th>Valor Médio Esperado</th>
+                <th class="col-metric">Métrica</th>
+                <th class="col-value">Valor</th>
+                <th class="col-expected">Valor Médio Esperado</th>
             </tr>
+    """
+
+    metrics = {
+        "MAE": mae,
+        "MSE": mse,
+        "RMSE": rmse,
+        "SMAPE": smape,
+        "R²": r2
+    }
+
+    for metric, value in metrics.items():
+        expected = expected_values[metric][0]
+        tooltip = metric_tooltips[metric]
+
+        # Define se o valor será vermelho
+        if metric == "R²":
+            highlight_class = "highlight-red" if value < expected else ""
+        else:
+            highlight_class = "highlight-red" if value > expected else ""
+
+        report_content += f"""
             <tr>
-                <td>
-                    <div class="tooltip">Erro Médio Absoluto (MAE)
-                        <span class="tooltiptext">{metric_tooltips["MAE"]}</span>
+                <td class="col-metric">
+                    <div class="tooltip">{metric}
+                        <span class="tooltiptext">{tooltip}</span>
                     </div>
                 </td>
-                <td>{mae:.2f}</td>
-                <td>
-                    <div class="tooltip">{expected_values["MAE"][0]:.2f}
-                        <span class="tooltiptext">{expected_values["MAE"][1]}</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="tooltip">Erro Quadrático Médio (MSE)
-                        <span class="tooltiptext">{metric_tooltips["MSE"]}</span>
-                    </div>
-                </td>
-                <td>{mse:.2f}</td>
-                <td>
-                    <div class="tooltip">{expected_values["MSE"][0]:.2f}
-                        <span class="tooltiptext">{expected_values["MSE"][1]}</span>
+                <td class="col-value {highlight_class}">{value:.2f}</td>
+                <td class="col-expected">
+                    <div class="tooltip">{expected:.2f}
+                        <span class="tooltiptext">{expected_values[metric][1]}</span>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <div class="tooltip">Raiz do Erro Quadrático Médio (RMSE)
-                        <span class="tooltiptext">{metric_tooltips["RMSE"]}</span>
-                    </div>
-                </td>
-                <td>{rmse:.2f}</td>
-                <td>
-                    <div class="tooltip">{expected_values["RMSE"][0]:.2f}
-                        <span class="tooltiptext">{expected_values["RMSE"][1]}</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="tooltip">Erro Percentual Absoluto Médio Simétrico (SMAPE)
-                        <span class="tooltiptext">{metric_tooltips["SMAPE"]}</span>
-                    </div>
-                </td>
-                <td>{smape:.2f}%</td>
-                <td>
-                    <div class="tooltip">{expected_values["SMAPE"][0]:.2f}%
-                        <span class="tooltiptext">{expected_values["SMAPE"][1]}</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="tooltip">Coeficiente de Determinação (R²)
-                        <span class="tooltiptext">{metric_tooltips["R²"]}</span>
-                    </div>
-                </td>
-                <td>{r2:.2f}</td>
-                <td>
-                    <div class="tooltip">{expected_values["R²"][0]:.2f}
-                        <span class="tooltiptext">{expected_values["R²"][1]}</span>
-                    </div>
-                </td>
-            </tr>
+        """
+
+    report_content += f"""
         </table>
         
         <h2>Dashboard</h2>
@@ -170,8 +147,6 @@ def predictive_model_performance_metrics_report(mae, mse, rmse, smape, r2, df_pr
     </body>
     </html>
     """
-    
+
     with open(report_filename, "w", encoding="utf-8") as file:
         file.write(report_content)
-    
-
