@@ -28,18 +28,8 @@ def train_and_predict():
     
     df_list = [pd.read_parquet(f) for f in files]
     df = pd.concat(df_list, ignore_index=True)
-
-    print(df.columns)
-
-    # print(df.head()) # Mostrar as primeiras 5 linhas
-    # print(df.info())  # Tipos de dados, colunas, valores nulos
-    # print(df.describe())  # Estatísticas das colunas numéricas
-    # print(df.columns)  # Lista das colunas disponíveis
-
-    
+      
     df["Calculation Date"] = pd.to_datetime(df["Calculation Date"])
-
-    print(df["Calculation Date"].value_counts().sort_index())
 
     df.sort_values("Calculation Date", inplace=True)
     
@@ -48,7 +38,6 @@ def train_and_predict():
     
     # Removendo outliers
     df = remove_outliers(df, features + [target])
-    # print(df.head())
 
     X = df[features]
     y = df[target]
@@ -90,7 +79,6 @@ def train_and_predict():
 
     # Obtendo os melhores hiperparâmetros encontrados
     best_params = random_search.best_params_
-    print("Melhores Hiperparâmetros Encontrados:", best_params)
 
     # Treinar modelo final com os melhores hiperparâmetros
     best_model = xgb.XGBRegressor(**best_params)

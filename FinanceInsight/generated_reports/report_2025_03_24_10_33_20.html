@@ -1,0 +1,162 @@
+
+    <html>
+    <head>
+        <title>Relatório de Métricas do Modelo Preditivo</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { color: #2c3e50; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+            th { background-color: #2c3e50; color: white; }
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+                cursor: help;
+            }
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 220px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 100%;
+                left: 50%;
+                margin-left: -110px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Relatório de Métricas do Modelo Preditivo</h1>
+        <p><strong>Data da Previsão:</strong> 24/03/2025</p>
+        <p><strong>Horário da Previsão:</strong> 10:33</p>
+        
+        <h2>Criptomoedas com Maior Potencial de Valorização</h2>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Nome</th>
+      <th>Símbolo</th>
+      <th>Preço Atual</th>
+      <th>Preço Previsto</th>
+      <th>Preço Atual Numérico</th>
+      <th>Preço Previsto Numérico</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ravencoin USD</td>
+      <td>RVN-USD</td>
+      <td>$0.01</td>
+      <td>$0.02</td>
+      <td>0.01</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <td>Siacoin USD</td>
+      <td>SC-USD</td>
+      <td>$0.00</td>
+      <td>$0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>COTI USD</td>
+      <td>COTI-USD</td>
+      <td>$0.08</td>
+      <td>$0.08</td>
+      <td>0.08</td>
+      <td>0.08</td>
+    </tr>
+  </tbody>
+</table>
+        
+        <h2>Métricas de Desempenho</h2>
+        <table>
+            <tr>
+                <th>Métrica</th>
+                <th>Valor</th>
+                <th>Valor Médio Esperado</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="tooltip">Erro Médio Absoluto (MAE)
+                        <span class="tooltiptext">Erro médio absoluto - Mede a média dos erros absolutos das previsões.</span>
+                    </div>
+                </td>
+                <td>0.29</td>
+                <td>
+                    <div class="tooltip">0.50
+                        <span class="tooltiptext">Quanto menor, melhor</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="tooltip">Erro Quadrático Médio (MSE)
+                        <span class="tooltiptext">Erro quadrático médio - Penaliza mais os erros grandes devido à elevação ao quadrado.</span>
+                    </div>
+                </td>
+                <td>0.26</td>
+                <td>
+                    <div class="tooltip">0.30
+                        <span class="tooltiptext">Quanto menor, melhor</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="tooltip">Raiz do Erro Quadrático Médio (RMSE)
+                        <span class="tooltiptext">Raiz do erro quadrático médio - Dá mais peso a erros grandes e mantém a unidade original.</span>
+                    </div>
+                </td>
+                <td>0.51</td>
+                <td>
+                    <div class="tooltip">0.50
+                        <span class="tooltiptext">Quanto menor, melhor</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="tooltip">Erro Percentual Absoluto Médio Simétrico (SMAPE)
+                        <span class="tooltiptext">Erro percentual absoluto médio simétrico - Mede a precisão da previsão em porcentagem.</span>
+                    </div>
+                </td>
+                <td>63.67%</td>
+                <td>
+                    <div class="tooltip">10.00%
+                        <span class="tooltiptext">Ideal abaixo de 10%</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="tooltip">Coeficiente de Determinação (R²)
+                        <span class="tooltiptext">Coeficiente de determinação - Mede o quão bem o modelo explica os dados. Quanto mais próximo de 1, melhor.</span>
+                    </div>
+                </td>
+                <td>0.18</td>
+                <td>
+                    <div class="tooltip">0.85
+                        <span class="tooltiptext">Quanto mais próximo de 1, melhor</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <h2>Dashboard</h2>
+        <p><a href="D:\Alex\_FIAP_POS_GRADUAÇÃO\FASE 03\fiap-posmlops-fase3-ml-model-creation\financeinsight\generated_dashboards\dash_2025_03_24_10_33_20.html" target="_blank">Clique aqui para visualizar o Dashboard</a></p>
+    </body>
+    </html>
+    
