@@ -1,7 +1,7 @@
 # **Documentação do Projeto FinanceInsight**
 
 ## **Visão Geral**
-O projeto **FinanceInsight** tem como objetivo a coleta, processamento, análise e previsão de preços de criptomoedas utilizando Machine Learning. Os dados são obtidos do Yahoo Finance e refinados para a extração de indicadores técnicos como **RSI, MACD e Bandas de Bollinger**. O modelo de Machine Learning faz previsões e gera relatórios e dashboards interativos para suporte à tomada de decisão.
+O projeto **FinanceInsight** tem como objetivo a coleta, processamento, análise e previsão de preços das **Criptomoedas com Maior Potencial de Valorização**, utilizando Machine Learning. Os dados são obtidos do Yahoo Finance e refinados para a extração de indicadores técnicos como **RSI, MACD e Bandas de Bollinger**. O modelo de Machine Learning faz previsões e gera relatórios e dashboards interativos para suporte à tomada de decisão.
 
 ---
 
@@ -21,7 +21,7 @@ financeinsight/
 │   ├── data/
 │   │   ├── data_fetcher.py  # Coleta de dados do Yahoo Finance
 │   │   ├── data_processor.py  # Processamento e refinamento de dados
-│   │   ├── feature_engineering.py  # Criação de indicadores técnicos (RSI, MACD, Bollinger)
+│   │   ├── feature_engineering.py  # Criação de indicadores técnicos (RSI, MACD e Bollinger)
 │   │   ├── __init__.py
 │   │
 │   ├── model/
@@ -80,7 +80,7 @@ financeinsight/
 ### **4. Previsões**
 **Arquivo:** `model/predict.py`  
 🔹 Utiliza o modelo treinado para prever os preços das **Criptomoedas com Maior Potencial de Valorização**.  
-🔹 Gera relatório de métricas (MAE, RMSE, R², SMAPE).  
+🔹 Gera relatório de métricas (MAE, MSE, RMSE, SMAPE e R²).  
 🔹 Salva previsões e feature importances.
 
 ### **5. Geração de Dashboards**
@@ -165,7 +165,7 @@ O modelo é avaliado com as seguintes métricas:
 
 Exemplo de saída:
 ```bash
-MAE: 24.52, MSE: 935.78, RMSE: 30.60, SMAPE: 8.12%, R²: 0.85
+MAE: 0.01, MSE: 0.00, RMSE: 0.03, SMAPE: 15.92, R²: 0.99
 ```
 
 ---
