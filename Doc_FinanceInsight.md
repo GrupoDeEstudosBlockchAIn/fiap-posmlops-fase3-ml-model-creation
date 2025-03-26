@@ -170,6 +170,12 @@ MAE: 0.01, MSE: 0.00, RMSE: 0.03, SMAPE: 15.92, R²: 0.99
 
 ---
 
+## **Tipo de Aprendizado e Modelo**
+🔹 **Aprendizado** - Supervisionado  
+🔹 **Modelo** - Regressão
+
+---
+
 ## **Contribuição**
 🔹 **Fork o repositório**  
 🔹 **Crie uma branch:** `git checkout -b minha-branch`  
