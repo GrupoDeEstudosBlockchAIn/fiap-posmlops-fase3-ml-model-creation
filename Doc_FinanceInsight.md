@@ -1,7 +1,7 @@
 # **Documentação do Projeto FinanceInsight**
 
 ## **Visão Geral**
-O projeto **FinanceInsight** tem como objetivo a coleta, processamento, análise e previsão de preços das **Criptomoedas com Maior Potencial de Valorização**, utilizando Machine Learning. Os dados são obtidos do Yahoo Finance e refinados para a extração de indicadores técnicos como **RSI, MACD e Bandas de Bollinger**. O modelo de Machine Learning faz previsões e gera relatórios e dashboards interativos para suporte à tomada de decisão.
+O projeto **FinanceInsight** tem como objetivo, a cada 15 minutos, coletar, processar, análisar e prever preços das **Criptomoedas com Maior Potencial de Valorização**, utilizando Machine Learning. Os dados são obtidos do Yahoo Finance e refinados para a extração de indicadores técnicos como **RSI, MACD e Bandas de Bollinger**. O modelo de Machine Learning faz previsões e gera relatórios e dashboards interativos para suporte à tomada de decisão.
 
 ---
 
@@ -51,6 +51,7 @@ financeinsight/
 │
 |── requirements.txt  # Dependências do projeto
 |── .gitignore
+|── Doc_FinanceInsight.md
 |── README.md
 ```
 
